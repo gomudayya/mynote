@@ -1,14 +1,9 @@
 import { Pressable, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 
-export default function MemoWriteButton({size, style, memo}) {
-  const navigation =  useNavigation();
-  
+export default function MemoWriteButton({size, style, onPress}) {
   return (
-    <Pressable onPress={() => navigation.navigate("WriteMemo", {
-      "memo": memo,
-    })}>
+    <Pressable onPress={onPress}>
       <FontAwesome name='pencil-square-o' size={size} style={[styles.icon, style]} />
     </Pressable>
   )

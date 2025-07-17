@@ -1,29 +1,19 @@
-export default class Memo {
-  id = undefined;
+import uuid from 'react-native-uuid'
 
-  constructor(title, content, order) {
+export default class Memo {
+  constructor(id = null, title = '', content = '', isSaved = false) {
+    this.id = id || uuid.v4();
     this.title = title;
     this.content = content;
-    this.order = order;
+    this.isSaved = isSaved;
   }
   
   static createEmptyMemo() {
-    return new Memo('', '', null);
+    return new Memo();
   }
-
-  static fromJson(json) {
-    const obj = JSON.parse(json);
-    const memo = new Memo(obj.title, obj.content, obj.order);
-    memo.id = obj.id;
-    return memo;
-  }
-
-  toJson() {
-    return JSON.stringify({
-      id: this.id,
-      title: this.title,
-      content: this.content,
-      order: this.order
-    });
+  
+  static fromJsonString(jsonString) {
+    const obj = JSON.parse(jsonString);
+    return new Memo(obj.id, obj.title, obj.content, obj.isSaved);
   }
 }

@@ -1,20 +1,20 @@
-import { Text, StyleSheet, Pressable } from 'react-native';
+import { Pressable, Text, StyleSheet } from 'react-native';
+import Colors from '../constants/Colors';
 
-
-export default function MemoStoreButton({ onPress }) {
+export default function PrimaryButton({label, onPress, size, style, }) {
   return (
     <Pressable style={({ pressed }) => [
       styles.button,
       pressed && styles.buttonPressed
     ]} onPress={onPress}>
-      <Text style={styles.text}>저장하기</Text>
+      <Text style={styles.text}>{label}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#000000ff',
+    backgroundColor: Colors.primary500,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   buttonPressed: {
-    backgroundColor: '#353535ff',
+    backgroundColor: Colors.primary300,
   },
   text: {
     color: 'white',
