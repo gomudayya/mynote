@@ -9,35 +9,11 @@ import MemoViewScreen from '../../screens/MemoViewScreen';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-// function DrawerNavigator() {
-//   return (
-//     <Drawer.Navigator 
-//       drawerContent={(props) => <DrawerMenuList {...props}/>}
-//       screenOptions={{}}>
-//       <Drawer.Screen name="Home" component={WriteMemoScreen} options={{}}/>
-//       <Drawer.Screen name="MemoView" component={MemoViewScreen} />
-//       <Drawer.Screen name="WriteMemo" component={WriteMemoScreen}></Drawer.Screen>
-//     </Drawer.Navigator>
-//   )
-// }
-
-// export default function Navigator() {
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator screenOptions={{
-//         headerShown : false
-//       }}>
-//         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   )
-// }
-
 function StackNavigator() {
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false,
-      // animation: 'none',
+      animation: 'none',
     }}>
       <Stack.Screen name="Home" component={WriteMemoScreen} options={{}}/>
       <Stack.Screen name="MemoView" component={MemoViewScreen} />

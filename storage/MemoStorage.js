@@ -8,12 +8,22 @@ import Memo from "../models/Memo";
 export async function saveMemo(memo) {
   try { 
     memo.isSaved = true;
-    await AsyncStorage.setItem(memo.id, JSON.stringify(memo));
     let memoList = await getMemoList();
     if (!memoList.includes(memo.id)) {
+      memo.position = memoList.length + 1;
       memoList.push(memo.id);
       await AsyncStorage.setItem('memoList', JSON.stringify(memoList));
     }
+    await AsyncStorage.setItem(memo.id, JSON.stringify(memo));
+  } catch(error) {
+    console.error('메모 저장 실패', error);
+  }
+}
+
+export async function saveMemos(memos) {
+  try {
+    const convertedMemos = memos.map((item) => [item.id, JSON.stringify(item)]);
+    AsyncStorage.multiSet(convertedMemos);
   } catch(error) {
     console.error('메모 저장 실패', error);
   }
