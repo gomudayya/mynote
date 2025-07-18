@@ -8,11 +8,12 @@ import Memo from "../models/Memo";
 export async function saveMemo(memo) {
   try { 
     memo.isSaved = true;
-    let memoList = await getMemoList();
-    if (!memoList.includes(memo.id)) {
-      memo.position = memoList.length + 1;
-      memoList.push(memo.id);
-      await AsyncStorage.setItem('memoList', JSON.stringify(memoList));
+    let memoIds = await getMemoIdList();
+    if (!memoIds.includes(memo.id)) {
+      const maxPosition = await getMaxPosition(memoIds);
+      memo.position = maxPosition + 1;
+      memoIds.push(memo.id);
+      await AsyncStorage.setItem('memoList', JSON.stringify(memoIds));
     }
     await AsyncStorage.setItem(memo.id, JSON.stringify(memo));
   } catch(error) {
@@ -38,7 +39,7 @@ export async function getMemoById(memoId) {
   }
 }
 
-export async function getMemoList() {
+export async function getMemoIdList() {
   try {
     const jsonValue = await AsyncStorage.getItem('memoList');
     return jsonValue ? JSON.parse(jsonValue) : [];
@@ -51,11 +52,22 @@ export async function getMemoList() {
 export async function deleteMemoById(memoId) {
   try {
     await AsyncStorage.removeItem(memoId);
-    let memoList = await getMemoList();
+    let memoList = await getMemoIdList();
     memoList = memoList.filter(id => id !== memoId);
 
     await AsyncStorage.setItem('memoList', JSON.stringify(memoList));
   } catch(error) {
     console.error('메모 삭제 실패', error);
+  }
+}
+
+async function getMaxPosition(memoIds) {
+  try {
+    const memos = await AsyncStorage.multiGet(memoIds);
+    const maxPosition = Math.max(...memos.map(([key, value]) => Memo.fromJsonString(value).position));
+    console.log(maxPosition);
+    return maxPosition;
+  } catch(error) {
+    console.error('max position 계산 실패', error);
   }
 }

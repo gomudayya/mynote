@@ -1,7 +1,7 @@
 import { DrawerContentScrollView, DrawerItem, useDrawerStatus } from '@react-navigation/drawer'
 import { StyleSheet, View, Pressable, Text } from 'react-native'
 import { useEffect, useState } from 'react'
-import { getMemoList, saveMemos } from '../../storage/MemoStorage'
+import { getMemoIdList, saveMemos } from '../../storage/MemoStorage'
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -17,7 +17,7 @@ export default function DrawerMenuList(props) {
     async function loadMemos() {
       if (!isDrawerOpen) return;
 
-      const memoIds = await getMemoList();
+      const memoIds = await getMemoIdList();
       const jsonMemos = await AsyncStorage.multiGet(memoIds);
       const loadedMemos = jsonMemos.map(([key, value]) => Memo.fromJsonString(value));
       loadedMemos.sort((a, b) => a.position - b.position);
@@ -68,7 +68,6 @@ export default function DrawerMenuList(props) {
         contentContainerStyle={{paddingBottom : 200, gap : 4}}
         onDragEnd={onDragEnd}
         onDragBegin={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
-        // onPlaceholderIndexChange={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
       />
     </View>
   )
