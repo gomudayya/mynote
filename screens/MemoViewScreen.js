@@ -1,8 +1,8 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native'
 
 import PrimaryButton from '../components/PrimaryButton';
-import { deleteMemo, deleteMemoById } from '../storage/MemoStorage';
+import { deleteMemoById } from '../storage/MemoStorage';
 import Colors from '../constants/Colors';
 import { useFocusEffect } from '@react-navigation/native';
 export default function MemoViewScreen({route, navigation}) {

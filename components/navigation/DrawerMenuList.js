@@ -21,7 +21,6 @@ export default function DrawerMenuList(props) {
       const jsonMemos = await AsyncStorage.multiGet(memoIds);
       const loadedMemos = jsonMemos.map(([key, value]) => Memo.fromJsonString(value));
       loadedMemos.sort((a, b) => a.position - b.position);
-      console.log(loadedMemos);
 
       setMemos(loadedMemos);
     }

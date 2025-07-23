@@ -81,6 +81,7 @@ export default function WriteMemoScreen({route, navigation}) {
           placeholder="메모 제목"
           value={memo.title}
           onChangeText={updateTitle}
+          placeholderTextColor='#868686ff'
         />
       </View>
         <View style={styles.contentContainer}>
@@ -91,6 +92,7 @@ export default function WriteMemoScreen({route, navigation}) {
             textAlignVertical="top"
             value={memo.content}
             onChangeText={updateContent}
+            placeholderTextColor='#868686ff'
           />
         </View>
     </KeyboardAvoidingView>

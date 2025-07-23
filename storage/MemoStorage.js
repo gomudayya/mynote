@@ -65,7 +65,6 @@ async function getMaxPosition(memoIds) {
   try {
     const memos = await AsyncStorage.multiGet(memoIds);
     const maxPosition = Math.max(...memos.map(([key, value]) => Memo.fromJsonString(value).position));
-    console.log(maxPosition);
     return maxPosition;
   } catch(error) {
     console.error('max position 계산 실패', error);
