@@ -1,18 +1,19 @@
-import { DrawerContentScrollView, DrawerItem, useDrawerStatus } from '@react-navigation/drawer'
-import { StyleSheet, View, Pressable, Text } from 'react-native'
+import { DrawerItem, useDrawerStatus } from '@react-navigation/drawer'
+import { StyleSheet, View } from 'react-native'
 import { useEffect, useState } from 'react'
 import { getMemoIdList, saveMemos } from '../../storage/MemoStorage'
-import { FontAwesome5, AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Memo from '../../models/Memo'
-import DrawerMenuItem from './DrawerMenuItem'
+import DrawerMemoItem from './DrawerMemoItem'
 import * as Haptics from 'expo-haptics';
 
 export default function DrawerMenuList(props) {
   const [memos, setMemos] = useState([]);
   const isDrawerOpen = useDrawerStatus() === 'open';
 
+  
   useEffect(() => {
     async function loadMemos() {
       if (!isDrawerOpen) return;
@@ -27,22 +28,12 @@ export default function DrawerMenuList(props) {
     loadMemos();
   }, [isDrawerOpen])
 
-  function handlePressDrawerItem (memo) {
-    props.navigation.navigate("StackNavigator", {
-      screen: "MemoView",
-      params: {
-        "memo": memo
-      }
-    });
-  }
-
   function renderDrawerItem({ item, drag, isActive }) {
     return (
-      <DrawerMenuItem 
-        onPress={() => handlePressDrawerItem(item)}
+      <DrawerMemoItem 
+        memo={item}
         onLongPress={drag}
         isActive={isActive}
-        title={item.title}
       />
     )
   }
