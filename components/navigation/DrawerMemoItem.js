@@ -26,8 +26,12 @@ function DrawerMemoItem({ memo, onLongPress, isActive}) {
   )
 }
 
+function memoEqual(memoA, memoB) {
+  return memoA.id === memoB.id && memoA.content === memoB.content && memoA.title === memoB.title;
+}
+
 export default React.memo(DrawerMemoItem , (prevProps, nextProps) => {
-  return prevProps.memo.id === nextProps.memo.id &&
+  return memoEqual(prevProps.memo, nextProps.memo) &&
         prevProps.isActive === nextProps.isActive && 
         prevProps.onLongPress === nextProps.onLongPress;
 });
