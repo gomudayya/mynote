@@ -9,7 +9,7 @@ function DrawerMemoItem({ memo, onLongPress, isActive}) {
     navigation.navigate("StackNavigator", {
       screen: "MemoView",
       params: {
-        "memo": memo
+        memoId: memo.id,
       }
     });
   }

@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import WriteMemoScreen from '../../screens/WriteMemoScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerMenuList from './DrawerMenuList';
 import MemoViewScreen from '../../screens/MemoViewScreen';
+import CreateMemoScreen from '../../screens/CreateMemoScreen';
+import UpdateMemoScreen from '../../screens/UpdateMemoScreen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -15,9 +15,9 @@ function StackNavigator() {
       headerShown: false,
       animation: 'none',
     }}>
-      <Stack.Screen name="Home" component={WriteMemoScreen} options={{}}/>
+      <Stack.Screen name="Home" component={CreateMemoScreen}/>
       <Stack.Screen name="MemoView" component={MemoViewScreen} />
-      <Stack.Screen name="WriteMemo" component={WriteMemoScreen} />
+      <Stack.Screen name="UpdateMemo" component={UpdateMemoScreen} />
     </Stack.Navigator>
   );
 }

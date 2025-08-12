@@ -1,22 +1,35 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native'
 
 import PrimaryButton from '../components/PrimaryButton';
 import { deleteMemoById } from '../storage/MemoStorage';
 import Colors from '../constants/Colors';
 import { useFocusEffect } from '@react-navigation/native';
+import { getMemoById } from '../storage/MemoStorage';
+import Memo from '../models/Memo';
+
 export default function MemoViewScreen({route, navigation}) {
-  const { memo } = route.params;
-  function handleMemoWriteButton() {
-    navigation.navigate("WriteMemo", {
-      "memo": memo,
+  const { memoId } = route.params;
+  const [ memo, setMemo ] = useState(Memo.createEmptyMemo());
+
+  useFocusEffect(() => {
+    async function loadMemo(memoId) {
+      const fetchedMemo = await getMemoById(memoId);
+      setMemo(fetchedMemo);
+    }
+
+    loadMemo(memoId);
+  })
+
+  function handleMemoUpdateButton() {
+    navigation.replace("UpdateMemo", {
+      memoId: memoId,
     });
   }
 
   function handleMemoDeleteButton() {
     async function deleteMemo(memoId) {
       await deleteMemoById(memoId);
-      navigation.navigate("Home", {"memo" : null});
     }
 
     Alert.alert(
@@ -32,6 +45,7 @@ export default function MemoViewScreen({route, navigation}) {
           style: "destructive", // IOS에서만 빨간색 표시, 안드로이드 X
           onPress: () => {
             deleteMemo(memo.id);
+            navigation.replace("Home", {memoId : null});
           }
         }
       ]
@@ -45,11 +59,11 @@ export default function MemoViewScreen({route, navigation}) {
         headerRight: () => (
           <View style={styles.headerButtonContainer}>
             <PrimaryButton label="삭제" onPress={handleMemoDeleteButton} />
-            <PrimaryButton label="수정" onPress={handleMemoWriteButton} />
+            <PrimaryButton label="수정" onPress={handleMemoUpdateButton} />
           </View>
         )
       });
-    }, [navigation, memo.id, handleMemoDeleteButton, handleMemoWriteButton])
+    }, [navigation, memoId, handleMemoDeleteButton, handleMemoUpdateButton])
   );
     
   return (
