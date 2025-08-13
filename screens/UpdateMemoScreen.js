@@ -20,6 +20,7 @@ export default function UpdateMemoScreen({ route }) {
   return (
     <MemoWriteForm 
       initialMemo={initialMemo}
+      headerTitle="메모 수정"
     />
   )
 }
