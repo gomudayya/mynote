@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native'
 
 import PrimaryButton from '../components/PrimaryButton';
@@ -12,14 +12,14 @@ export default function MemoViewScreen({route, navigation}) {
   const { memoId } = route.params;
   const [ memo, setMemo ] = useState(Memo.createEmptyMemo());
 
-  useFocusEffect(() => {
+  useEffect(() => {
     async function loadMemo(memoId) {
       const fetchedMemo = await getMemoById(memoId);
       setMemo(fetchedMemo);
     }
 
     loadMemo(memoId);
-  })
+  }, [memoId])
 
   function handleMemoUpdateButton() {
     navigation.replace("UpdateMemo", {
